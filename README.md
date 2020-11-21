@@ -1,8 +1,20 @@
 <h1 align="center">代码编辑器：将Vim打造成爱不释手的IDE</h1>
 
-# 介绍Vim基本用法
+# Vim基本用法
 
-# 源码安装Vim编辑器
+~/.vim/目录用于保存vim的所有配置，如配色方案、插件脚本、配置文件等；
+~/.vim/.vimrc是控制vim行为的配置文件，无论窗口外观、字体显示，还是操作方式、插件属性均可通过编辑该文件进行深度定制；
+~/.vim/syntax/用于存放语法描述脚本；
+~/.vim/spell/用于存放拼写检查脚本；
+~/.vim/doc/用于存放各插件帮助文件；
+~/.vim/plugin/用于存放每次vim启动运行的插件脚本；
+
+<div align="center">
+<img src="https://github.com/YearMonthDay/vim_foge_ide/blob/main/picture/vim%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E5%8D%A1.png" alt=""/><br />
+ （vim 命令速查）
+</div>
+
+# Vim源码安装
 正常Linux发行版（如：Ubuntu、Fedora、Debian等）中预置的 Vim 大多都存在功能阉割，或版本较久。因此，在搭建基于Vim的代码编辑器时，最好将预置Vim升级成全功能的最新版。
 
 此外，Vim插件中存在大量由perl、python、lua、ruby等主流脚本语言编写的插件，在源码编译/安装Vim编辑器之前，需先对python、lua、ruby、perl等进行安装，然后再Vim编译时增加--enable-pythoninterp、--enable-luainterp、--enable-rubyinterp、---enable-perlinterp等选项用于支持python、lua、ruby、、perl编写的插件。
@@ -26,3 +38,17 @@ sudo make install
 <img src="https://github.com/YearMonthDay/vim_foge_ide/blob/main/picture/vim%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF.png" alt=""/><br />
  （vim 版本信息）
 </div>
+
+# Vim插件管理
+vim \*.vim传统格式的插件打包文件中存在\*.vim（插件脚本）和\*.txt（插件帮助文件）两类文件。
+手动安装插件时，将解包后的\*.vim拷贝到~/.vim/plugin/，\*.txt拷贝到~/.vim/doc/即可完成插件安装，重启vim后刚安装的插件即已生效，但帮助文件需执行 :helptags ~/.vim/doc/ 才能生效，后续可通过 :h *** 查看插件帮助信息。
+传统格式插件需要解包和两次拷贝才能完成安装，相对比较繁琐，且还存在如下几个问题：
+* 插件名字冲突：所有插件的帮助文档都在 doc/ 子目录、插件脚本都在 plugin/ 子目录，同个名字空间下必然引发名字冲突；
+* 插件卸载易误：你需要先知道 doc/ 和 plugin/ 子目录下哪些文件是属于该插件的，再逐一删除，容易多删/漏删；
+
+为使每个插件在.vim/下都有各自独立子目录，插件升级、卸载时，只需找到对应插件目录进行变更。vundle（https://github.com/VundleVim/Vundle.vim） 插件管理器应运而生，其可以让你在配置文件中管理插件，且可以非常方便的查找、安装、更新或卸载插件，并自动配置插件的运行路径和生成帮助文件。
+
+可通过如下命令安装vundle插件管理器：
+```
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+```
