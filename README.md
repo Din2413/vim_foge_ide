@@ -23,6 +23,6 @@ sudo make install
 
 编译安装完成之后，执行vim --version即可看到如下结果：
 <div align="center">
-<img src="https://github.com/YearMonthDay/vim_foge_ide/blob/main/picture/vim%20version.png" alt=""/><br />
+<img src="https://github.com/YearMonthDay/vim_foge_ide/blob/main/picture/vim%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF.png" alt=""/><br />
  （vim 版本信息）
 </div>
