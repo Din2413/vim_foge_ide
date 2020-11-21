@@ -20,3 +20,9 @@ cd vim/
 sudo make
 sudo make install
 ```
+
+编译安装完成之后，执行vim --version即可看到如下结果：
+<div align="center">
+<img src="https://github.com/YearMonthDay/vim_foge_ide/blob/main/picture/vim%20version.png" alt=""/><br />
+ （vim 版本信息）
+</div>
