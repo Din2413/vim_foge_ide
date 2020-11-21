@@ -2,9 +2,7 @@
 
 # Vim基本用法
 
-~/.vim/目录用于保存vim的所有配置，如配色方案、插件脚本、配置文件等；
-
-~/.vim/.vimrc是控制vim行为的配置文件，无论窗口外观、字体显示，还是操作方式、插件属性均可通过编辑该文件进行深度定制；
+~/.vimrc是控制vim行为的配置文件，无论窗口外观、字体显示，还是操作方式、插件属性均可通过编辑该文件进行深度定制；
 
 ~/.vim/syntax/用于存放语法描述脚本；
 
@@ -56,7 +54,45 @@ vim \*.vim传统格式的插件打包文件中存在\*.vim（插件脚本）和\
 
 为使每个插件在.vim/下都有各自独立子目录，插件升级、卸载时，只需找到对应插件目录进行变更。vundle（https://github.com/VundleVim/Vundle.vim） 插件管理器应运而生，其可以让你在配置文件中管理插件，且可以非常方便的查找、安装、更新或卸载插件，并自动配置插件的运行路径和生成帮助文件。
 
-可通过如下命令安装vundle插件管理器：
+<h3>通过如下命令安装vundle插件管理器：</h3>
+
 ```
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ```
+
+<h3>在~/.vimrc增加插件配置信息：</h3>
+
+```
+" vundle 环境设置
+filetype off
+" 将Vundle加入运行时路径中(Runtime path)
+set rtp+=~/.vim/bundle/Vundle.vim
+" vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
+call vundle#begin()
+" vundle插件管理器
+Plugin 'VundleVim/Vundle.vim'
+" 插件列表结束
+call vundle#end()
+filetype plugin indent on
+```
+
+<h3>执行如下命令可安装、卸载、更新、查询插件：</h3>
+
+```
+# 插件安装：先在.vimrc vundle#begin()与vundle#end()之间加入Plugin配置
+# vim主题插件
+Plugin 'altercation/vim-colors-solarized'
+# 后续进入vim命令行模式，执行如下命令安装插件
+:PluginInstall
+
+# 插件卸载：先从.vimrc vundle#begin()与vundle#end()之间删除Plugin配置
+# 后续进入vim命令行模式，执行如下命令卸载插件
+:PluginClean
+
+# 插件更新：vim命令行模式下执行如下命令更新插件
+:PluginUpdate
+
+# 插件搜索：vim命令行模式下执行如下命令搜索foo插件
+:PluginSearch foo
+```
+PS:可在插件网站 https://vimawesome.com 上搜寻符合预期的vim插件。
