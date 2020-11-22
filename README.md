@@ -146,9 +146,11 @@ PS:可在插件网站 https://vimawesome.com 上搜寻符合预期的vim插件�
 
 然而传统 Vim 补全还是有两个迈不过去的坎：语义补全太弱，其次是补全分析无法再后台运行，对大项目而言，某些复杂符号的补全会拖慢你的打字速度。</br>
 
-新一代的 Vim 补全系统，YouCompleteMe (https://github.com/ycm-core/YouCompleteMe)和 Deoplete (https://github.com/Shougo/deoplete.nvim)，都支持异步补全和基于 clang 的语义补全，前者集成度高，后者扩展方便。对于 C/C++ 的话，推荐使用 YCM，因为 deoplete 的 clang 补全插件不够稳定，太吃内存，并且反应比较慢。</br>
+新一代的 Vim 补全系统，YouCompleteMe (https://github.com/ycm-core/YouCompleteMe) 和 Deoplete (https://github.com/Shougo/deoplete.nvim) ，都支持异步补全和基于 clang 的语义补全，前者集成度高，后者扩展方便。对于 C/C++ 的话，推荐使用 YCM，因为 deoplete 的 clang 补全插件不够稳定，太吃内存，并且反应比较慢。</br>
 
 <h3>代码检查</h3>
 代码检查有利于在你编辑代码的同时就帮你把潜在错误编注出来，从而不用等到编译或者运行时才发现问题，提前暴露问题。</br>
 
-知名的 vim 代码检测插件有syntastic (https://github.com/vim-syntastic/syntastic)、ALE (https://github.com/dense-analysis/ale)等。前者比较老旧，不能实时检查，且保存文件检查器运行时间较长，效率较低；后者功能相对强大，支持实时检测与并发运行，且可同步在标识栏/状态栏显示检测结果。
+知名的 vim 代码检测插件有syntastic (https://github.com/vim-syntastic/syntastic) 、ALE (https://github.com/dense-analysis/ale) 等。前者比较老旧，不能实时检查，且保存文件检查器运行时间较长，效率较低；后者功能相对强大，支持实时检测与并发运行，且可同步在标识栏/状态栏显示检测结果。
+
+未完待续...
