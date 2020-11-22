@@ -44,10 +44,13 @@
 <h3>vim自定义快捷键</h3>
 vim存在很多预置快捷键，再加上各类插件的快捷键，大量快捷键出现在单层空间中难免引起冲突。为缓解冲突文件，vim引入 <leader> 前缀键，以此衍生出更多的快捷键命名空间。例如将r键配置为<leader> r、<leader> <leader> r等多个快捷键。</br>
 前缀键默认为"\"，使用如下命令，可以将前缀键定义为逗号：
+ 
 ```
 led mapleader=","
 ```
+
 在定义前缀键之后，使用如下命令，定义快捷键用于删除当前文件中所有行尾多余空格：
+
 ```
 # noremap为非递归映射，map为递归映射
 # 1、前者可解决后者映射命令存在包含关系时陷入递归陷阱的问题
@@ -60,13 +63,13 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 # Vim源码安装
 正常Linux发行版（如：Ubuntu、Fedora、Debian等）中预置的 Vim 大多都存在功能阉割，或版本较久。因此，在搭建基于Vim的代码编辑器时，最好将预置Vim升级成全功能的最新版。
 
-此外，Vim插件中存在大量由perl、python、lua、ruby等主流脚本语言编写的插件，在源码编译/安装Vim编辑器之前，需先对python、lua、ruby、perl等进行安装，然后再Vim编译时增加--enable-pythoninterp、--enable-luainterp、--enable-rubyinterp、---enable-perlinterp等选项用于支持python、lua、ruby、、perl编写的插件。
+此外，Vim 插件中存在大量由 perl、python、lua、ruby 等主流脚本语言编写的插件，在源码编译/安装Vim编辑器之前，需先对 python、lua、ruby、perl 等进行安装，然后再Vim编译时增加 --enable-pythoninterp、--enable-luainterp、--enable-rubyinterp、---enable-perlinterp 等选项用于支持 python、lua、ruby、perl 编写的插件。
 
 ```
-# 第一步：安装python、lua、ruby、perl
+# 第一步：安装 python、lua、ruby、perl
 sudo apt install git python-dev ruby-dev lua5.1-policy lua5.1-policy-dev  libncurses5-dev
 
-# 第二步：下载Vim源码
+# 第二步：下载 Vim 源码
 git clone git@github.com:vim/vim.git
 
 # 第三步：编译安装Vim
@@ -76,16 +79,16 @@ sudo make
 sudo make install
 ```
 
-编译安装完成之后，执行vim --version即可看到如下结果：
+编译安装完成之后，执行 vim --version 即可看到如下结果：
 <div align="center">
 <img src="https://github.com/YearMonthDay/vim_foge_ide/blob/main/picture/vim%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF.png" alt=""/><br />
  （vim 版本信息）
 </div>
 
 # Vim插件管理
-vim \*.vim传统格式的插件打包文件中存在\*.vim（插件脚本）和\*.txt（插件帮助文件）两类文件。
+vim \*.vim 传统格式的插件打包文件中存在 \*.vim （插件脚本）和 \*.txt （插件帮助文件）两类文件。
 
-手动安装插件时，将解包后的\*.vim拷贝到~/.vim/plugin/，\*.txt拷贝到~/.vim/doc/即可完成插件安装，重启vim后刚安装的插件即已生效，但帮助文件需执行 :helptags ~/.vim/doc/ 才能生效，后续可通过 :h *** 查看插件帮助信息。
+手动安装插件时，将解包后的 \*.vim 拷贝到 ~/.vim/plugin/， \*.txt 拷贝到 ~/.vim/doc/ 即可完成插件安装，重启vim后刚安装的插件即已生效，但帮助文件需执行 :helptags ~/.vim/doc/ 才能生效，后续可通过 :h *** 查看插件帮助信息。
 
 传统格式插件需要解包和两次拷贝才能完成安装，相对比较繁琐，且还存在如下几个问题：
 
@@ -94,22 +97,22 @@ vim \*.vim传统格式的插件打包文件中存在\*.vim（插件脚本）和\
 
 为使每个插件在.vim/下都有各自独立子目录，插件升级、卸载时，只需找到对应插件目录进行变更。vundle（https://github.com/VundleVim/Vundle.vim） 插件管理器应运而生，其可以让你在配置文件中管理插件，且可以非常方便的查找、安装、更新或卸载插件，并自动配置插件的运行路径和生成帮助文件。
 
-<h3>通过如下命令安装vundle插件管理器：</h3>
+<h3>通过如下命令安装 vundle 插件管理器：</h3>
 
 ```
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ```
 
-<h3>在~/.vimrc增加插件配置信息：</h3>
+<h3>在 ~/.vimrc 增加插件配置信息：</h3>
 
 ```
 " vundle 环境设置
 filetype off
-" 将Vundle加入运行时路径中(Runtime path)
+" 将 Vundle 加入运行时路径中(Runtime path)
 set rtp+=~/.vim/bundle/Vundle.vim
 " vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
 call vundle#begin()
-" vundle插件管理器
+" vundle 插件管理器
 Plugin 'VundleVim/Vundle.vim'
 " 插件列表结束
 call vundle#end()
@@ -119,20 +122,33 @@ filetype plugin indent on
 <h3>执行如下命令可安装、卸载、更新、查询插件：</h3>
 
 ```
-# 插件安装：先在.vimrc vundle#begin()与vundle#end()之间加入Plugin配置
-# vim主题插件
+# 插件安装：先在 .vimrc vundle#begin() 与 vundle#end() 之间加入 Plugin 配置
+# vim 主题插件
 Plugin 'altercation/vim-colors-solarized'
-# 后续进入vim命令行模式，执行如下命令安装插件
+# 后续进入 vim 命令行模式，执行如下命令安装插件
 :PluginInstall
 
-# 插件卸载：先从.vimrc vundle#begin()与vundle#end()之间删除Plugin配置
+# 插件卸载：先从 .vimrc vundle#begin() 与 vundle#end() 之间删除 Plugin 配置
 # 后续进入vim命令行模式，执行如下命令卸载插件
 :PluginClean
 
-# 插件更新：vim命令行模式下执行如下命令更新插件
+# 插件更新：vim 命令行模式下执行如下命令更新插件
 :PluginUpdate
 
-# 插件搜索：vim命令行模式下执行如下命令搜索foo插件
+# 插件搜索：vim 命令行模式下执行如下命令搜索foo插件
 :PluginSearch foo
 ```
 PS:可在插件网站 https://vimawesome.com 上搜寻符合预期的vim插件。
+
+# 构建代码编辑器 
+<h3>代码补全</h3>
+传统的 Vim 代码补全基本以 omni 系列补全和符号补全为主，omni 补全系统是 Vim 自带的针对不同文件类型编写不同的补全函数的基础语义补全系统，搭配 neocomplete 可以很方便的对所有补全结果（omni补全/符号补全/字典补全）进行一个合成并且自动弹出补全框，虽然赶不上 IDE 的补全，但是已经比大部分编辑器补全好用很多了。</br>
+
+然而传统 Vim 补全还是有两个迈不过去的坎：语义补全太弱，其次是补全分析无法再后台运行，对大项目而言，某些复杂符号的补全会拖慢你的打字速度。</br>
+
+新一代的 Vim 补全系统，YouCompleteMe (https://github.com/ycm-core/YouCompleteMe)和 Deoplete (https://github.com/Shougo/deoplete.nvim)，都支持异步补全和基于 clang 的语义补全，前者集成度高，后者扩展方便。对于 C/C++ 的话，推荐使用 YCM，因为 deoplete 的 clang 补全插件不够稳定，太吃内存，并且反应比较慢。</br>
+
+<h3>代码检查</h3>
+代码检查有利于在你编辑代码的同时就帮你把潜在错误编注出来，从而不用等到编译或者运行时才发现问题，提前暴露问题。</br>
+
+知名的 vim 代码检测插件有syntastic (https://github.com/vim-syntastic/syntastic)、ALE (https://github.com/dense-analysis/ale)等。前者比较老旧，不能实时检查，且保存文件检查器运行时间较长，效率较低；后者功能相对强大，支持实时检测与并发运行，且可同步在标识栏/状态栏显示检测结果。
