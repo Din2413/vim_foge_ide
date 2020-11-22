@@ -97,14 +97,12 @@ vim \*.vim 传统格式的插件打包文件中存在 \*.vim （插件脚本）�
 
 为使每个插件在.vim/下都有各自独立子目录，插件升级、卸载时，只需找到对应插件目录进行变更。vundle（https://github.com/VundleVim/Vundle.vim） 插件管理器应运而生，其可以让你在配置文件中管理插件，且可以非常方便的查找、安装、更新或卸载插件，并自动配置插件的运行路径和生成帮助文件。
 
-<h3>通过如下命令安装 vundle 插件管理器：</h3>
-
+通过如下命令安装 vundle 插件管理器：
 ```
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ```
 
-<h3>在 ~/.vimrc 增加插件配置信息：</h3>
-
+在 ~/.vimrc 增加插件配置信息：
 ```
 " vundle 环境设置
 filetype off
@@ -119,8 +117,7 @@ call vundle#end()
 filetype plugin indent on
 ```
 
-<h3>执行如下命令可安装、卸载、更新、查询插件：</h3>
-
+执行如下命令可安装、卸载、更新、查询插件：
 ```
 # 插件安装：先在 .vimrc vundle#begin() 与 vundle#end() 之间加入 Plugin 配置
 # vim 主题插件
