@@ -220,6 +220,11 @@ sudo update-alternatives --query gcc
 sudo update-alternatives --query g++
 ```
 
+<div align="center">
+<img src="https://github.com/YearMonthDay/vim_foge_ide/blob/main/picture/YouCompleteMe.gif" alt=""/><br />
+ （YouCompleteMe效果图）
+</div>
+
 <h3>代码检查</h3>
 代码检查有利于在你编辑代码的同时就帮你把潜在错误编注出来，从而不用等到编译或者运行时才发现问题，提前暴露问题。</br>
 
