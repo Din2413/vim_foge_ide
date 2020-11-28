@@ -187,8 +187,8 @@ Plugin "ycm-core/YouCompleteMe"
 ./install.py --all
 ```
 
-在安装YouCompleteMe插件过程中，提示异常和对应解决方案如下所示：
-1、Your C++ compiler does NOT fully support C++17，即gcc版本较低，不支持C++17
+在安装YouCompleteMe插件过程中，提示异常和对应解决方案如下所示：</br>
+1、Your C++ compiler does NOT fully support C++17，即gcc版本较低，不支持C++17</br>
 解决方案：安装gcc8.1.0（参考<a href="https://blog.csdn.net/davidhopper/article/details/79681695">GCC 9.1编译器安装方法</a>）
 ```
 # 第一步：下载gcc8.1.0源码
