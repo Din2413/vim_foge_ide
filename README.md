@@ -66,17 +66,48 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 此外，Vim 插件中存在大量由 perl、python、lua、ruby 等主流脚本语言编写的插件，在源码编译/安装Vim编辑器之前，需先对 python、lua、ruby、perl 等进行安装，然后再Vim编译时增加 --enable-pythoninterp、--enable-luainterp、--enable-rubyinterp、---enable-perlinterp 等选项用于支持 python、lua、ruby、perl 编写的插件。
 
 ```
-# 第一步：安装 python、lua、ruby、perl
+# 第一步：在安装新版本的vim之前，卸载原来安装的老版本vim
+sudo apt-get remove vim  
+sudo apt-get remove vim-runtime  
+sudo apt-get remove gvim  
+sudo apt-get remove vim-tiny  
+sudo apt-get remove vim-common  
+sudo apt-get remove vim-gui-common 
+
+# 第二步：安装 python、lua、ruby、perl
 sudo apt install git python-dev ruby-dev lua5.1-policy lua5.1-policy-dev  libncurses5-dev
 
-# 第二步：下载 Vim 源码
+# 第三步：下载 Vim 源码
 git clone git@github.com:vim/vim.git
 
-# 第三步：编译安装Vim
+# 第四步：编译安装Vim
+# PS: vim8不能同时支持python和python3，源码编译时请勿同时配置python2和python3
 cd vim/
-./configure --enable-pythoninterp=yes --with-python-config-dir=/usr/lib/python2.7/config --enable-luainterp=yes --with-lua-prefix=/usr --enable-rubyinterp=yes --with-ruby-command=ruby --enable-perlinterp=yes
+./configure --enable-multibyte \
+            --enable-python3interp=yes \
+            --with-python3-config-dir=/usr/lib/python3.6/config \
+            --enable-luainterp=yes \
+            --with-lua-prefix=/usr \
+            --enable-rubyinterp=yes \
+            --with-ruby-command=ruby \
+            --enable-perlinterp=yes \
+            --enable-gui=gtk2 \
+            --enable-cscope
 sudo make
 sudo make install
+
+# 第五步：如上安装完成之后，执行vim --version可以发现并未支持perl，可以查看一下vim/src/auto/config.log,发现异常大多为：/usr/bin/ld: cannot find -lperl
+# 4.1 看出libperl.so位置
+cd /; sudo find . -name "libperl.so*"
+# 4.2 在-L/usr/lib/x86_64-linux-gnu/perl/5.26/CORE下创建libperl.so链接文件
+cd /usr/lib/x84_64-linux-gnu/perl/5.26/CORE
+sudo ln -s /usr/lib/x86_64-linux-gnu/libperl.so.5.26 libperl.so
+# 4.3 重新执行一遍configure、make、make install
+
+# 第六步：设置系统环境变量，在/etc/profile系统环境变量中，增加export行，并执行source立即生效
+sudo vim /etc/profile
+export PATH="$PATH:/usr/local/bin/"
+sudo source /etc/profile
 ```
 
 编译安装完成之后，执行 vim --version 即可看到如下结果：
@@ -95,7 +126,7 @@ vim \*.vim 传统格式的插件打包文件中存在 \*.vim （插件脚本）�
 * 插件名字冲突：所有插件的帮助文档都在 doc/ 子目录、插件脚本都在 plugin/ 子目录，同个名字空间下必然引发名字冲突；
 * 插件卸载易误：你需要先知道 doc/ 和 plugin/ 子目录下哪些文件是属于该插件的，再逐一删除，容易多删/漏删；
 
-为使每个插件在.vim/下都有各自独立子目录，插件升级、卸载时，只需找到对应插件目录进行变更。vundle（https://github.com/VundleVim/Vundle.vim） 插件管理器应运而生，其可以让你在配置文件中管理插件，且可以非常方便的查找、安装、更新或卸载插件，并自动配置插件的运行路径和生成帮助文件。
+为使每个插件在.vim/下都有各自独立子目录，插件升级、卸载时，只需找到对应插件目录进行变更。<a href="https://github.com/VundleVim/Vundle.vim">vundle</a> 插件管理器应运而生，其可以让你在配置文件中管理插件，且可以非常方便的查找、安装、更新或卸载插件，并自动配置插件的运行路径和生成帮助文件。
 
 通过如下命令安装 vundle 插件管理器：
 ```
@@ -143,11 +174,55 @@ PS:可在插件网站 https://vimawesome.com 上搜寻符合预期的vim插件�
 
 然而传统 Vim 补全还是有两个迈不过去的坎：语义补全太弱，其次是补全分析无法再后台运行，对大项目而言，某些复杂符号的补全会拖慢你的打字速度。</br>
 
-新一代的 Vim 补全系统，YouCompleteMe (https://github.com/ycm-core/YouCompleteMe) 和 Deoplete (https://github.com/Shougo/deoplete.nvim) ，都支持异步补全和基于 clang 的语义补全，前者集成度高，后者扩展方便。对于 C/C++ 的话，推荐使用 YCM，因为 deoplete 的 clang 补全插件不够稳定，太吃内存，并且反应比较慢。</br>
+新一代的 Vim 补全系统，<a href="https://github.com/ycm-core/YouCompleteMe">YouCompleteMe</a> 和 <a href="https://github.com/Shougo/deoplete.nvim">Deoplete</a> ，都支持异步补全和基于 clang 的语义补全，前者集成度高，后者扩展方便。对于 C/C++ 的话，推荐使用 YCM，因为 deoplete 的 clang 补全插件不够稳定，太吃内存，并且反应比较慢。</br>
+
+使用如下步骤安装YouCompleteMe插件：
+```
+# YouCompleteMe可采用Vundle安装和git手动安装两种，官方推荐Vundle安装，若前者安装不上，可采用手动安装，这里采用Vundle安装方式，手动方式不做赘述
+# Vundle插件管理增加如下配置，并vim命令行中执行:PluginInstall进行安装,整个安装过程较慢，请耐心等待
+Plugin "ycm-core/YouCompleteMe"
+
+# 如上步骤安装完成之后，便可跳转到~/.vim/bundle/YouCompleteMe执行如下命令完成插件安装
+# 整个安装过程可能会提示各种异常，具体可见下方异常解决
+./install.py --all
+```
+
+在安装YouCompleteMe插件过程中，提示异常和对应解决方案如下所示：
+1、Your C++ compiler does NOT fully support C++17，即gcc版本较低，不支持C++17
+解决方案：安装gcc8.1.0（参考<a href="https://blog.csdn.net/davidhopper/article/details/79681695">GCC 9.1编译器安装方法</a>）
+```
+# 第一步：下载gcc8.1.0源码
+wget ftp://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-8.1.0/gcc-8.1.0.tar.xz
+# 解压gcc8.1.0
+tar -Jxvf gcc-8.1.0.tar.xz
+
+# 第二步：下载依赖包，默认的下载服务器ftp://gcc.gnu.org/pub/gcc/infrastructure/下载会失败
+# 需修改download_prerequisites将默认服务器替换成http://mirror.linux-ia64.org/gnu/gcc/infrastructure/镜像服务器
+cd gcc-8.1.0
+./contrib/download_prerequisites
+
+# 第三步：运行configure命令生成Makefile
+./gcc-8.1.0/configure --prefix=/usr/local/gcc-8.1
+
+# 第四步：运行make命令编译构建GCC编译器
+make
+
+# 第五步：运行sudo make install命令安装GCC编译器
+sudo make instal
+
+# 第六步：指定本机使用最新版本GCC编译器，使用update-alternatives命令配置增加最新版本编译器
+# update-alternatives --install <链接> <名称> <路径> <优先级>
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/local/bin/gcc 50
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/local/bin/g++ 50
+# 查询本机已有GCC编译器情况
+sudo update-alternatives --query gcc
+# 查询本机已有G++编译器情况
+sudo update-alternatives --query g++
+```
 
 <h3>代码检查</h3>
 代码检查有利于在你编辑代码的同时就帮你把潜在错误编注出来，从而不用等到编译或者运行时才发现问题，提前暴露问题。</br>
 
-知名的 vim 代码检测插件有syntastic (https://github.com/vim-syntastic/syntastic) 、ALE (https://github.com/dense-analysis/ale) 等。前者比较老旧，不能实时检查，且保存文件检查器运行时间较长，效率较低；后者功能相对强大，支持实时检测与并发运行，且可同步在标识栏/状态栏显示检测结果。
+知名的 vim 代码检测插件有</a href="https://github.com/vim-syntastic/syntastic">syntastic</a> 、<a href="https://github.com/dense-analysis/ale">ALE</a> 等。前者比较老旧，不能实时检查，且保存文件检查器运行时间较长，效率较低；后者功能相对强大，支持实时检测与并发运行，且可同步在标识栏/状态栏显示检测结果。
 
 未完待续...
