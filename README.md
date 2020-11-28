@@ -220,6 +220,9 @@ sudo update-alternatives --query gcc
 sudo update-alternatives --query g++
 ```
 
+YouCompleteMe配置：
+1、增加YCM配置文件，该文件只对C、C++生效，在.vimrc中let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'的配置（参考工程中的.ycm_extra_conf.py文件）；
+
 <div align="center">
 <img src="https://github.com/YearMonthDay/vim_foge_ide/blob/main/picture/YouCompleteMe.gif" alt=""/><br />
  （YouCompleteMe效果图）
