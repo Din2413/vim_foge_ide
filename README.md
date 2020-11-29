@@ -52,11 +52,11 @@ led mapleader=","
 在定义前缀键之后，使用如下命令，定义快捷键用于删除当前文件中所有行尾多余空格：
 
 ```
-# noremap为非递归映射，map为递归映射
-# 1、前者可解决后者映射命令存在包含关系时陷入递归陷阱的问题
-# 比如 map dd jddk 用于将dd命令映射为jddk（下移一行、删除、上移一行），但实际执行时，执行j之后遇到dd，vim认为仍然需要映射，因此dd又被映射为jddk，导致一直循环映射
-# 2、映射命令存在生效模式选择，n代表普通模式生效、i代表插入模式生效、v代表可视模式生效、c代表命令行模式生效
-# nnoremap首字符为n，则代表普通模式下生效的非递归映射
+" noremap为非递归映射，map为递归映射
+" 1、前者可解决后者映射命令存在包含关系时陷入递归陷阱的问题
+" 比如 map dd jddk 用于将dd命令映射为jddk（下移一行、删除、上移一行），但实际执行时，执行j之后遇到dd，vim认为仍然需要映射，因此dd又被映射为jddk，导致一直循环映射
+" 2、映射命令存在生效模式选择，n代表普通模式生效、i代表插入模式生效、v代表可视模式生效、c代表命令行模式生效
+" nnoremap首字符为n，则代表普通模式下生效的非递归映射
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 ```
 
@@ -66,7 +66,7 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 此外，Vim 插件中存在大量由 perl、python、lua、ruby 等主流脚本语言编写的插件，在源码编译/安装Vim编辑器之前，需先对 python、lua、ruby、perl 等进行安装，然后再Vim编译时增加 --enable-pythoninterp、--enable-luainterp、--enable-rubyinterp、---enable-perlinterp 等选项用于支持 python、lua、ruby、perl 编写的插件。
 
 ```
-# 第一步：在安装新版本的vim之前，卸载原来安装的老版本vim
+" 第一步：在安装新版本的vim之前，卸载原来安装的老版本vim
 sudo apt-get remove vim  
 sudo apt-get remove vim-runtime  
 sudo apt-get remove gvim  
@@ -74,14 +74,14 @@ sudo apt-get remove vim-tiny
 sudo apt-get remove vim-common  
 sudo apt-get remove vim-gui-common 
 
-# 第二步：安装 python、lua、ruby、perl
+" 第二步：安装 python、lua、ruby、perl
 sudo apt install git python-dev ruby-dev lua5.1-policy lua5.1-policy-dev  libncurses5-dev
 
-# 第三步：下载 Vim 源码
+" 第三步：下载 Vim 源码
 git clone git@github.com:vim/vim.git
 
-# 第四步：编译安装Vim
-# PS: vim8不能同时支持python和python3，源码编译时请勿同时配置python2和python3
+" 第四步：编译安装Vim
+" PS: vim8不能同时支持python和python3，源码编译时请勿同时配置python2和python3
 cd vim/
 ./configure --enable-multibyte \
             --enable-python3interp=yes \
@@ -96,15 +96,15 @@ cd vim/
 sudo make
 sudo make install
 
-# 第五步：如上安装完成之后，执行vim --version可以发现并未支持perl，可以查看一下vim/src/auto/config.log,发现异常大多为：/usr/bin/ld: cannot find -lperl
-# 4.1 看出libperl.so位置
+" 第五步：如上安装完成之后，执行vim --version可以发现并未支持perl，可以查看一下vim/src/auto/config.log,发现异常大多为：/usr/bin/ld: cannot find -lperl
+" 4.1 看出libperl.so位置
 cd /; sudo find . -name "libperl.so*"
-# 4.2 在-L/usr/lib/x86_64-linux-gnu/perl/5.26/CORE下创建libperl.so链接文件
+" 4.2 在-L/usr/lib/x86_64-linux-gnu/perl/5.26/CORE下创建libperl.so链接文件
 cd /usr/lib/x84_64-linux-gnu/perl/5.26/CORE
 sudo ln -s /usr/lib/x86_64-linux-gnu/libperl.so.5.26 libperl.so
-# 4.3 重新执行一遍configure、make、make install
+" 4.3 重新执行一遍configure、make、make install
 
-# 第六步：设置系统环境变量，在/etc/profile系统环境变量中，增加export行，并执行source立即生效
+" 第六步：设置系统环境变量，在/etc/profile系统环境变量中，增加export行，并执行source立即生效
 sudo vim /etc/profile
 export PATH="$PATH:/usr/local/bin/"
 sudo source /etc/profile
@@ -150,20 +150,20 @@ filetype plugin indent on
 
 执行如下命令可安装、卸载、更新、查询插件：
 ```
-# 插件安装：先在 .vimrc vundle#begin() 与 vundle#end() 之间加入 Plugin 配置
-# vim 主题插件
+" 插件安装：先在 .vimrc vundle#begin() 与 vundle#end() 之间加入 Plugin 配置
+" vim 主题插件
 Plugin 'altercation/vim-colors-solarized'
-# 后续进入 vim 命令行模式，执行如下命令安装插件
+" 后续进入 vim 命令行模式，执行如下命令安装插件
 :PluginInstall
 
-# 插件卸载：先从 .vimrc vundle#begin() 与 vundle#end() 之间删除 Plugin 配置
-# 后续进入vim命令行模式，执行如下命令卸载插件
+" 插件卸载：先从 .vimrc vundle#begin() 与 vundle#end() 之间删除 Plugin 配置
+" 后续进入vim命令行模式，执行如下命令卸载插件
 :PluginClean
 
-# 插件更新：vim 命令行模式下执行如下命令更新插件
+" 插件更新：vim 命令行模式下执行如下命令更新插件
 :PluginUpdate
 
-# 插件搜索：vim 命令行模式下执行如下命令搜索foo插件
+" 插件搜索：vim 命令行模式下执行如下命令搜索foo插件
 :PluginSearch foo
 ```
 PS:可在插件网站 https://vimawesome.com 上搜寻符合预期的vim插件。
@@ -178,12 +178,12 @@ PS:可在插件网站 https://vimawesome.com 上搜寻符合预期的vim插件�
 
 使用如下步骤安装YouCompleteMe插件：
 ```
-# YouCompleteMe可采用Vundle安装和git手动安装两种，官方推荐Vundle安装，若前者安装不上，可采用手动安装，这里采用Vundle安装方式，手动方式不做赘述
-# Vundle插件管理增加如下配置，并vim命令行中执行:PluginInstall进行安装,整个安装过程较慢，请耐心等待
+" YouCompleteMe可采用Vundle安装和git手动安装两种，官方推荐Vundle安装，若前者安装不上，可采用手动安装，这里采用Vundle安装方式，手动方式不做赘述
+" Vundle插件管理增加如下配置，并vim命令行中执行:PluginInstall进行安装,整个安装过程较慢，请耐心等待
 Plugin "ycm-core/YouCompleteMe"
 
-# 如上步骤安装完成之后，便可跳转到~/.vim/bundle/YouCompleteMe执行如下命令完成插件安装
-# 整个安装过程可能会提示各种异常，具体可见下方异常解决
+" 如上步骤安装完成之后，便可跳转到~/.vim/bundle/YouCompleteMe执行如下命令完成插件安装
+" 整个安装过程可能会提示各种异常，具体可见下方异常解决
 ./install.py --all
 ```
 
@@ -191,32 +191,32 @@ Plugin "ycm-core/YouCompleteMe"
 1、Your C++ compiler does NOT fully support C++17，即gcc版本较低，不支持C++17</br>
 解决方案：安装gcc8.1.0（参考<a href="https://blog.csdn.net/davidhopper/article/details/79681695">GCC 9.1编译器安装方法</a>）
 ```
-# 第一步：下载gcc8.1.0源码
+" 第一步：下载gcc8.1.0源码
 wget ftp://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-8.1.0/gcc-8.1.0.tar.xz
-# 解压gcc8.1.0
+" 解压gcc8.1.0
 tar -Jxvf gcc-8.1.0.tar.xz
 
-# 第二步：下载依赖包，默认的下载服务器ftp://gcc.gnu.org/pub/gcc/infrastructure/下载会失败
-# 需修改download_prerequisites将默认服务器替换成http://mirror.linux-ia64.org/gnu/gcc/infrastructure/镜像服务器
+" 第二步：下载依赖包，默认的下载服务器ftp://gcc.gnu.org/pub/gcc/infrastructure/下载会失败
+" 需修改download_prerequisites将默认服务器替换成http://mirror.linux-ia64.org/gnu/gcc/infrastructure/镜像服务器
 cd gcc-8.1.0
 ./contrib/download_prerequisites
 
-# 第三步：运行configure命令生成Makefile
+" 第三步：运行configure命令生成Makefile
 ./gcc-8.1.0/configure --prefix=/usr/local/gcc-8.1
 
-# 第四步：运行make命令编译构建GCC编译器
+" 第四步：运行make命令编译构建GCC编译器
 make
 
-# 第五步：运行sudo make install命令安装GCC编译器
+" 第五步：运行sudo make install命令安装GCC编译器
 sudo make instal
 
-# 第六步：指定本机使用最新版本GCC编译器，使用update-alternatives命令配置增加最新版本编译器
-# update-alternatives --install <链接> <名称> <路径> <优先级>
+" 第六步：指定本机使用最新版本GCC编译器，使用update-alternatives命令配置增加最新版本编译器
+" update-alternatives --install <链接> <名称> <路径> <优先级>
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/local/bin/gcc 50
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/local/bin/g++ 50
-# 查询本机已有GCC编译器情况
+" 查询本机已有GCC编译器情况
 sudo update-alternatives --query gcc
-# 查询本机已有G++编译器情况
+" 查询本机已有G++编译器情况
 sudo update-alternatives --query g++
 ```
 
@@ -224,42 +224,82 @@ YouCompleteMe配置：</br>
 1、增加YCM配置文件，该文件只对C、C++生效，在.vimrc中let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'的配置（参考工程中的.ycm_extra_conf.py文件）；</br>
 2、.vimrc中的其他YCM配置选项;
 ```
-# YouCompleteMe
-# Python Semantic Completion
+" YouCompleteMe
+" Python Semantic Completion
 let g:ycm_python_binary_path = '/usr/bin/python3'
-# C family Completion Path
+" C family Completion Path
 let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
-# 跳转快捷键
+" 跳转快捷键
 nnoremap <c-k> :YcmCompleter GoToDeclaration<CR>|
 nnoremap <c-h> :YcmCompleter GoToDefinition<CR>| 
 nnoremap <c-j> :YcmCompleter GoToDefinitionElseDeclaration<CR>|
-# 停止提示是否载入本地ycm_extra_conf文件
+" 停止提示是否载入本地ycm_extra_conf文件
 let g:ycm_confirm_extra_conf = 0
-# 语法关键字补全
+" 语法关键字补全
 let g:ycm_seed_identifiers_with_syntax = 1
-# 开启 YCM 基于标签引擎
+" 开启 YCM 基于标签引擎
 let g:ycm_collect_identifiers_from_tags_files = 1
-# 从第2个键入字符就开始罗列匹配项
+" 从第2个键入字符就开始罗列匹配项
 let g:ycm_min_num_of_chars_for_completion=2
-# 在注释输入中也能补全
+" 在注释输入中也能补全
 let g:ycm_complete_in_comments = 1
-# 在字符串输入中也能补全
+" 在字符串输入中也能补全
 let g:ycm_complete_in_strings = 1
-# 注释和字符串中的文字也会被收入补全
+" 注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
-# 弹出列表时选择第1项的快捷键(默认为<TAB>和<Down>)
+" 弹出列表时选择第1项的快捷键(默认为<TAB>和<Down>)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-# 弹出列表时选择前1项的快捷键(默认为<S-TAB>和<UP>)
+" 弹出列表时选择前1项的快捷键(默认为<S-TAB>和<UP>)
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-# 主动补全, 默认为<C-Space>
+" 主动补全, 默认为<C-Space>
 let g:ycm_key_invoke_completion = ['<C-Space>']
-# 停止显示补全列表(防止列表影响视野), 可以按<C-Space>重新弹出
+" 停止显示补全列表(防止列表影响视野), 可以按<C-Space>重新弹出
 let g:ycm_key_list_stop_completion = ['<C-y>']
 ```
 
 <div align="center">
 <img src="https://github.com/YearMonthDay/vim_foge_ide/blob/main/picture/YouCompleteMe.gif" alt=""/><br />
  （YouCompleteMe效果图）
+</div>
+
+<h3>项目管理</h3>
+NERDTree是Vim编辑器的文件系统浏览器。使用此插件，用户可以直观地浏览复杂的目录层次结构，快速打开文件以进行读取或编辑，以及执行基本的文件系统操作。
+
+vim的Vundle插件管理安装NERDTree：
+```
+Plugin 'preservim/nerdtree'
+```
+
+.vimrc增加NERDTree插件配置：
+```
+" vim启动时，自动打开NERDTree
+autocmd vimenter * NERDTree
+" vim未指定文件启动时，自动打开NERDTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" vim在打开目录启动时，自动打开NERDTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+```
+
+NERDTree常用快捷键：
+```
+ctrl + w + h 光标 focus 左侧树形目录
+ctrl + w + l 光标 focus 右侧文件显示窗口
+ctrl + w + w 光标自动在左右侧窗口切换
+ctrl + w + r 移动当前窗口的布局位置
+
+o 在已有窗口中打开文件、目录或书签，并跳到该窗口
+go 在已有窗口 中打开文件、目录或书签，但不跳到该窗口
+P 跳到根结点
+p 跳到父结点
+K 到同目录第一个节点
+J 到同目录最后一个节点
+```
+
+<div align="center">
+<img src="https://github.com/YearMonthDay/vim_foge_ide/blob/main/picture/NREDTree.png" alt=""/><br />
+ （NERDTree效果图）
 </div>
 
 <h3>代码检查</h3>
