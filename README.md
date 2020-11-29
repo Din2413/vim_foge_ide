@@ -298,7 +298,7 @@ J 到同目录最后一个节点
 ```
 
 <div align="center">
-<img src="https://github.com/YearMonthDay/vim_foge_ide/blob/main/picture/NREDTree.png" alt=""/><br />
+<img src="https://github.com/YearMonthDay/vim_foge_ide/blob/main/picture/NERDTree.png" alt=""/><br />
  （NERDTree效果图）
 </div>
 
