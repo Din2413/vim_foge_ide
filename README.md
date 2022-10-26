@@ -278,7 +278,7 @@ cd gcc-8.1.0
 " 第三步：运行configure命令生成Makefile
 ./gcc-8.1.0/configure --prefix=/usr/local/gcc-8.1
 
-如果配置过程中出现一下错误，意味着缺少gcc-multilib库，则执行sudo apt-get install gcc-multilib进行安装解决
+如果配置过程中出现一下错误，意味着缺少gcc-multilib库，则执行sudo apt-get install gcc-multilib安装解决
 /usr/bin/ld: cannot find Scrt1.o: No such file or directory
 /usr/bin/ld: cannot find crti.o: No such file or directory
 /usr/bin/ld: skipping incompatible /usr/lib/gcc/x86_64-linux-gnu/7/libgcc.a when searching for -lgcc
@@ -290,6 +290,8 @@ configure: error: I suspect your system does not have 32-bit development librari
 
 " 第四步：运行make命令编译构建GCC编译器
 make
+如果编译过程中出现了如下错误，表示没有g++工具以及相关库，执行sudo apt-get install build-essential安装解决
+error: C++ preprocessor "/lib/cpp" fails sanity check
 
 " 第五步：运行sudo make install命令安装GCC编译器
 sudo make instal
