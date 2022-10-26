@@ -278,6 +278,16 @@ cd gcc-8.1.0
 " 第三步：运行configure命令生成Makefile
 ./gcc-8.1.0/configure --prefix=/usr/local/gcc-8.1
 
+如果配置过程中出现一下错误，意味着缺少gcc-multilib库，则执行sudo apt-get install gcc-multilib进行安装解决
+/usr/bin/ld: cannot find Scrt1.o: No such file or directory
+/usr/bin/ld: cannot find crti.o: No such file or directory
+/usr/bin/ld: skipping incompatible /usr/lib/gcc/x86_64-linux-gnu/7/libgcc.a when searching for -lgcc
+/usr/bin/ld: cannot find -lgcc
+/usr/bin/ld: skipping incompatible /usr/lib/gcc/x86_64-linux-gnu/7/libgcc.a when searching for -lgcc
+/usr/bin/ld: cannot find -lgcc
+collect2: error: ld returned 1 exit status
+configure: error: I suspect your system does not have 32-bit development libraries (libc and headers). If you have them, rerun configure with --enable-multilib. If you do not have them, and want to build a 64-bit-only compiler, rerun configure with --disable-multilib.
+
 " 第四步：运行make命令编译构建GCC编译器
 make
 
