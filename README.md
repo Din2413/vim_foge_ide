@@ -248,7 +248,21 @@ Plugin "ycm-core/YouCompleteMe"
 ```
 
 在安装YouCompleteMe插件过程中，提示异常和对应解决方案如下所示：</br>
-1、Your C++ compiler does NOT fully support C++17，即gcc版本较低，不支持C++17</br>
+1、CMake 3.14 or higher is required.  You are running version 3.10.2，即cmake版本较低，需>3.14</br>
+解决方案：安装cmake-3.17.1
+```
+" 第一步：下载cmake-3.17.1源码
+wget https://github.com/Kitware/CMake/releases/download/v3.17.1/cmake-3.17.1.tar.gz
+" 解压cmake-3.17.1
+tar -xvf cmake-3.17.1.tar.gz
+
+" 第二步：配置、编译安装
+./bootstrap
+make
+sudo make install
+```
+
+2、Your C++ compiler does NOT fully support C++17，即gcc版本较低，不支持C++17</br>
 解决方案：安装gcc8.1.0（参考<a href="https://blog.csdn.net/davidhopper/article/details/79681695">GCC 9.1编译器安装方法</a>）
 ```
 " 第一步：下载gcc8.1.0源码
